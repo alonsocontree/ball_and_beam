@@ -116,7 +116,7 @@ function gui_distancia_plot()
                             delta_error = max(-15, min(15, delta_error));
 
                             salida = evalfis(fis, [error_actual, delta_error]);
-                            salida = max(0, min(180, round(salida)));
+                            salida = max(20, min(160, round(salida)));  % Limitar entre 20° y 160°
                             writeline(s, num2str(salida));
 
                             t_actual = datetime('now');
@@ -177,7 +177,7 @@ function gui_distancia_plot()
         etiquetas = ["NG", "N", "Z", "P", "PG"];
         x_err = [-20 -10 0 10 20];
         x_dif = [-15 -7.5 0 7.5 15];
-        x_out = [180 135 90 45 0];
+        x_out = [160 120 90 60 20];
 
         fis = addInput(fis, [-20 20], "Name", "error");
         for i = 1:5
@@ -189,7 +189,7 @@ function gui_distancia_plot()
             fis = addMF(fis, "delta_error", "trimf", triSpan(x_dif, i), "Name", etiquetas(i));
         end
 
-        fis = addOutput(fis, [0 180], "Name", "servo");
+        fis = addOutput(fis, [20 160], "Name", "servo");
         for i = 1:5
             fis = addMF(fis, "servo", "trimf", sort(triSpan(x_out, i)), "Name", etiquetas(i));
         end
